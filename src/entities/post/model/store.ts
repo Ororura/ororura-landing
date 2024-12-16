@@ -11,6 +11,9 @@ type InitialStateType = {
   posts: PostType[];
 };
 
-const postStore = new Store<InitialStateType>({} as InitialStateType);
+const postStore = new Store<InitialStateType>({
+  posts: [],
+});
 
 export { postStore };
+export type { PostType };

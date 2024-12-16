@@ -7,10 +7,16 @@ type Props = {
 
 const Post: FC<Props> = ({ data }) => {
   return (
-    <div>
-      <p>Заголовок: {data.title}</p>
-      <p>Текст: {data.text}</p>
-      <p>Дата публикации: {data.date}</p>
+    <div className='mb-7'>
+      <p className='font-bold'>{data.title}</p>
+      {data.video && (
+        <video width="600" controls>
+          <source src={data.video} type="video/mp4" />
+          Ваш браузер не поддерживает видео.
+        </video>
+      )}
+      <p>{data.text}</p>
+      <p>{data.date}</p>
     </div>
   );
 };

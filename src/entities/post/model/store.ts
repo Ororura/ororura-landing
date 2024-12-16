@@ -11,9 +11,11 @@ type InitialStateType = {
   posts: PostType[];
 };
 
-const postStore = new Store<InitialStateType>({
-  posts: [],
-});
+const initialState: InitialStateType = {
+  posts: [{ id: 1, title: "Hello world!", text: "Это самый первый пост!", date: "16.12.2024" }],
+};
+
+const postStore = new Store<InitialStateType>(initialState);
 
 export { postStore };
 export type { PostType };

@@ -7,8 +7,8 @@ type Props = {
 
 const Post: FC<Props> = ({ data }) => {
   return (
-    <div className='mb-7'>
-      <p className='font-bold'>{data.title}</p>
+    <div className="mb-7 border-b border-purple-400">
+      <p className="font-bold">{data.title}</p>
       {data.video && (
         <video width="600" controls>
           <source src={data.video} type="video/mp4" />

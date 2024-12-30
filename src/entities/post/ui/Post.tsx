@@ -1,5 +1,8 @@
 import { FC } from "react";
 import { PostType } from "../model";
+import { PostHeader } from "widgets/postHeaderWidget/ui";
+import { PostVideo } from "widgets/postVideoWidget/ui";
+import { PostActions } from "widgets/postActionsWidget/ui";
 
 type Props = {
   data: PostType;
@@ -7,16 +10,11 @@ type Props = {
 
 const Post: FC<Props> = ({ data }) => {
   return (
-    <div className="mb-7">
-      <h2 className="font-bold text-[20px]">{data.title}</h2>
-      {data.video && (
-        <video width="600" controls>
-          <source src={data.video} type="video/mp4" />
-          Ваш браузер не поддерживает видео.
-        </video>
-      )}
-      <p className='mt-2'>{data.text}</p>
-      <p className='text-gray-500 text-[12px] mt-2'>{data.date}</p>
+    <div className="mb-7 p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+      <PostHeader title={data.title} date={data.date} />
+      {data.video && <PostVideo videoUrl={data.video} />}
+      <p className="mt-2 text-gray-700 leading-relaxed">{data.text}</p>
+      <PostActions />
     </div>
   );
 };

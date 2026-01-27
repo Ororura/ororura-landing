@@ -20,6 +20,7 @@ const getTimeUntil = (targetDate: Date | string | number): TimeUntil => {
 
   const diffMs = target.getTime() - now.getTime();
 
+  // Полные значения
   const totalMilliseconds = diffMs;
   const totalSeconds = diffMs / 1000;
   const totalMinutes = totalSeconds / 60;
@@ -27,24 +28,38 @@ const getTimeUntil = (targetDate: Date | string | number): TimeUntil => {
   const totalDays = totalHours / 24;
   const totalWeeks = totalDays / 7;
 
+  // Разбивка на компоненты (более точная)
   const absDiffMs = Math.abs(diffMs);
+  const isNegative = diffMs < 0;
 
-  const milliseconds = absDiffMs % 1000;
-  const seconds = Math.floor(absDiffMs / 1000) % 60;
-  const minutes = Math.floor(absDiffMs / (1000 * 60)) % 60;
-  const hours = Math.floor(absDiffMs / (1000 * 60 * 60)) % 24;
-  const days = Math.floor(absDiffMs / (1000 * 60 * 60 * 24)) % 30;
-  const months = Math.floor(absDiffMs / (1000 * 60 * 60 * 24 * 30)) % 12;
-  const years = Math.floor(absDiffMs / (1000 * 60 * 60 * 24 * 365));
+  let remaining = absDiffMs;
+
+  const milliseconds = remaining % 1000;
+  remaining = Math.floor(remaining / 1000);
+
+  const seconds = remaining % 60;
+  remaining = Math.floor(remaining / 60);
+
+  const minutes = remaining % 60;
+  remaining = Math.floor(remaining / 60);
+
+  const hours = remaining % 24;
+  remaining = Math.floor(remaining / 24);
+
+  const days = remaining;
+
+  // Приблизительный расчёт для месяцев и лет
+  const years = Math.floor(days / 365);
+  const months = Math.floor((days % 365) / 30);
 
   return {
-    years: diffMs < 0 ? -years : years,
-    months: diffMs < 0 ? -months : months,
-    days: diffMs < 0 ? -days : days,
-    hours: diffMs < 0 ? -hours : hours,
-    minutes: diffMs < 0 ? -minutes : minutes,
-    seconds: diffMs < 0 ? -seconds : seconds,
-    milliseconds: diffMs < 0 ? -milliseconds : milliseconds,
+    years: isNegative ? -years : years,
+    months: isNegative ? -months : months,
+    days: isNegative ? -days : days,
+    hours: isNegative ? -hours : hours,
+    minutes: isNegative ? -minutes : minutes,
+    seconds: isNegative ? -seconds : seconds,
+    milliseconds: isNegative ? -milliseconds : milliseconds,
     totalMilliseconds,
     totalSeconds,
     totalMinutes,
@@ -54,4 +69,4 @@ const getTimeUntil = (targetDate: Date | string | number): TimeUntil => {
   };
 };
 
-export { getTimeUntil };
+export { getTimeUntil, type TimeUntil };

@@ -1,6 +1,15 @@
+"use client";
+
+import { useCountdown } from "features/countdown";
 import { FC } from "react";
 
 const Header: FC = () => {
+  const { timeUntil } = useCountdown({
+    targetDate: "2026-06-27T00:00:00",
+    onComplete: () => {
+      console.log("Пора домой!");
+    },
+  });
   return (
     <header className="bg-primary-dark-purple h-16 border-b border-purple-400">
       <div className="max-w-screen-lg items-center mx-auto flex font-medium h-full justify-between px-4">
@@ -38,6 +47,12 @@ const Header: FC = () => {
               <span>💻</span>
               GitHub
             </a>
+          </li>
+          <li>
+            <div className="flex items-center gap-2 transition-colors">
+              <span>🏠</span>
+              <p>{timeUntil.days}</p>
+            </div>
           </li>
         </ul>
       </div>

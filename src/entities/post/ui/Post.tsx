@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { PostType } from "../model";
-import { PostHeader } from "widgets/postHeaderWidget/ui";
-import { PostVideo } from "widgets/postVideoWidget/ui";
-import { PostActions } from "widgets/postActionsWidget/ui";
+import { PostHeader } from "features/posts/ui/postHeaderWidget/ui";
+import { PostVideo } from "features/posts/ui/postVideoWidget/ui";
+import { PostActions } from "features/posts/ui/postActionsWidget/ui";
 
 type Props = {
   data: PostType;

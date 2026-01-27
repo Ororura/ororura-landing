@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Header } from "shared/header/ui";
+import { Header } from "widgets/header/ui";
 import { PostWidget } from "features/posts/ui/postWidgets/ui";
 
 const Home: FC = () => {

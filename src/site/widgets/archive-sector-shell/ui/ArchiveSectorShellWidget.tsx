@@ -1,13 +1,11 @@
 "use client";
 
+import type { FC } from "react";
+
 import { useArchiveTransition } from "@/features/archive-entry";
 import { LanguageSwitch } from "@/features/language-switch";
 import { SoundToggle, useShrineAudio } from "@/features/sound-toggle";
-import {
-  ArchiveSectorPreviewCard,
-  getArchiveSector,
-  getRelatedArchiveSectors
-} from "@/entities/archive-sector";
+import { ArchiveSectorPreviewCard, getArchiveSector, getRelatedArchiveSectors } from "@/entities/archive-sector";
 import type { ArchiveSectorId } from "@/entities/archive-sector";
 import { RelicInsignia } from "@/entities/relic-insignia";
 import { sanctumCopy } from "@/shared/config";
@@ -20,17 +18,17 @@ type ArchiveSectorShellWidgetProps = {
   sectorId: ArchiveSectorId;
 };
 
-const ArchiveSectorShellWidget = ({ sectorId }: ArchiveSectorShellWidgetProps) => {
+const ArchiveSectorShellWidget: FC<ArchiveSectorShellWidgetProps> = ({ sectorId }) => {
   const { locale, setLocale } = useArchiveLocale("en");
   const copy = sanctumCopy[locale];
   const sector = getArchiveSector(locale, sectorId);
   const openChannelSector = getArchiveSector(locale, "open-channel");
   const relatedSectors = getRelatedArchiveSectors(locale, sectorId);
   const { beginTransition, isTransitioning } = useArchiveTransition();
-  const { playClick, playHover, soundEnabled, toggleSound } = useShrineAudio();
+  const { playClick, playHover, playNavigate, soundEnabled, toggleSound } = useShrineAudio();
 
   const handleOpenChamber = (href: string) => {
-    void playClick();
+    void playNavigate();
     beginTransition(href, 420);
   };
 
@@ -106,9 +104,15 @@ const ArchiveSectorShellWidget = ({ sectorId }: ArchiveSectorShellWidgetProps) =
                   <p className="mt-6 max-w-3xl text-[0.92rem] leading-relaxed text-[#b3a895]">{sector.description}</p>
 
                   <div className="mt-7 flex flex-wrap items-center gap-3 font-system text-[0.62rem] uppercase tracking-[0.24em] text-[#cbbda8]">
-                    <span className="rounded-full border border-[#ded2bf16] bg-[#ffffff05] px-4 py-2">{sector.signal}</span>
-                    <span className="rounded-full border border-[#ded2bf16] bg-[#ffffff05] px-4 py-2">{sector.featureLine}</span>
-                    <span className="rounded-full border border-[#ded2bf16] bg-[#ffffff05] px-4 py-2">{copy.archiveReadyLabel}</span>
+                    <span className="rounded-full border border-[#ded2bf16] bg-[#ffffff05] px-4 py-2">
+                      {sector.signal}
+                    </span>
+                    <span className="rounded-full border border-[#ded2bf16] bg-[#ffffff05] px-4 py-2">
+                      {sector.featureLine}
+                    </span>
+                    <span className="rounded-full border border-[#ded2bf16] bg-[#ffffff05] px-4 py-2">
+                      {copy.archiveReadyLabel}
+                    </span>
                   </div>
 
                   <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -147,7 +151,9 @@ const ArchiveSectorShellWidget = ({ sectorId }: ArchiveSectorShellWidgetProps) =
                       onPointerEnter={playHover}
                       type="button"
                     >
-                      {sectorId === "open-channel" ? copy.inspectLabel : `${copy.openLabel}: ${openChannelSector.title}`}
+                      {sectorId === "open-channel"
+                        ? copy.inspectLabel
+                        : `${copy.openLabel}: ${openChannelSector.title}`}
                     </button>
                   </div>
                 </div>
@@ -195,7 +201,7 @@ const ArchiveSectorShellWidget = ({ sectorId }: ArchiveSectorShellWidgetProps) =
       <div
         className={cn(
           "pointer-events-none absolute inset-0 z-20 bg-[radial-gradient(circle_at_center,rgba(139,117,80,0.16),rgba(7,6,7,0.96)_62%,rgba(7,6,7,1)_100%)] transition-opacity duration-700",
-          isTransitioning ? "opacity-100" : "opacity-0"
+          isTransitioning ? "opacity-100" : "opacity-0",
         )}
       />
     </main>

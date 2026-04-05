@@ -1,11 +1,7 @@
 import type { Locale } from "./entry-copy";
 import type { QuickAccessLink } from "./sanctum-copy";
 
-type QuestsPageStatLabel =
-  | "archiveCount"
-  | "featuredCount"
-  | "stackCount"
-  | "workSpan";
+type QuestsPageStatLabel = "archiveCount" | "featuredCount" | "stackCount" | "workSpan";
 
 type QuestsContent = {
   archiveEmpty: string;
@@ -44,143 +40,135 @@ type QuestsContent = {
 
 const questsCopy: Record<Locale, QuestsContent> = {
   en: {
-    archiveEmpty: "No relics match the current archive filter. Change the filing mode and the shelf repopulates.",
-    archiveIntro:
-      "Smaller records, stranger tools, prototypes, and useful fragments. Less polished than the featured dossiers. Still worth inspecting.",
-    archiveLabel: "archive // side quests // relic shelf",
-    chamberLabel: "sanctum.route // quests",
-    chamberStatus: "professional work indexed // archive shelf online",
-    currentFilterLabel: "active filter",
-    descriptor:
-      "A project chamber for shipped interfaces, engineering systems, and a few deliberate side-quests. The presentation is atmospheric. The work is real.",
-    featuredIntro:
-      "Primary case records. Readable enough for hiring panels, structured enough for engineers, still filed like artifacts.",
-    featuredLabel: "featured quests",
-    filterLabel: "archive filter",
-    headingEyebrow: "quest log // professional record chamber",
-    inspectHint: "hover or select a dossier to move it into inspect focus",
-    inspectLabel: "inspect panel",
-    intro:
-      "Featured work is presented as quest records: what was built, what role was played, what stack carried it, and why it mattered.",
+    archiveEmpty: "No projects match the current filter.",
+    archiveIntro: "Additional projects, experiments, and utilities beyond the main case studies.",
+    archiveLabel: "more projects",
+    chamberLabel: "portfolio // projects",
+    chamberStatus: "selected work, experiments, and tools",
+    currentFilterLabel: "current filter",
+    descriptor: "Project list with shipped work, internal tools, and experiments.",
+    featuredIntro: "Main case studies with context: task, role, stack, and result.",
+    featuredLabel: "selected projects",
+    filterLabel: "filter",
+    headingEyebrow: "projects // case studies",
+    inspectHint: "Select a project to see the details.",
+    inspectLabel: "project details",
+    intro: "These projects best show how I solve product and engineering problems.",
     languageLabel: "Language",
     linksLabel: "links",
-    openChannelLabel: "открыть канал",
-    outcomeLabel: "outcome",
+    openChannelLabel: "Contact",
+    outcomeLabel: "result",
     quickLinks: [
       {
         external: true,
         href: "https://github.com/ororura",
-        hint: "open-source traces / repo index",
+        hint: "repositories, code, and commit history",
         id: "github",
         label: "GitHub",
-        signal: "public mirror",
-        tone: "gold"
+        signal: "external",
+        tone: "gold",
       },
       {
         href: "/manuscript",
-        hint: "condensed CV / printable record",
+        hint: "resume in document form",
         id: "cv",
-        label: "Manuscript",
-        signal: "formal record",
-        tone: "rust"
+        label: "CV",
+        signal: "document",
+        tone: "rust",
       },
       {
         href: "/open-channel",
-        hint: "contact / case file requests",
+        hint: "direct contact",
         id: "telegram",
-        label: "Open Channel",
-        signal: "direct relay",
-        tone: "cyan"
-      }
+        label: "Contact",
+        signal: "contact",
+        tone: "cyan",
+      },
     ],
-    quickLinksIntro: "Fast exits for readers who want the public trace, the formal document, or a direct signal path.",
-    quickLinksLabel: "quick exits",
-    recordLabel: "record id",
-    returnLabel: "return to sanctum",
+    quickLinksIntro: "Fast links to code, CV, and contact.",
+    quickLinksLabel: "quick links",
+    recordLabel: "project id",
+    returnLabel: "back to main page",
     roleLabel: "role",
-    soundOff: "Sound: muted",
-    soundOn: "Sound: active",
+    soundOff: "Sound off",
+    soundOn: "Sound on",
     stackLabel: "stack",
-    statsLabel: "quest metrics",
+    statsLabel: "project metrics",
     statsLabels: {
-      archiveCount: "archive relics",
-      featuredCount: "featured dossiers",
-      stackCount: "stacks in rotation",
-      workSpan: "work span"
+      archiveCount: "other projects",
+      featuredCount: "selected projects",
+      stackCount: "technologies",
+      workSpan: "period",
     },
-    systemLabel: "system signal",
-    systemValue: "quests.index == readable // atmospheric // bilingual-ready",
-    title: "Quests"
+    systemLabel: "status",
+    systemValue: "projects ready // ru/en",
+    title: "Projects",
   },
   ru: {
-    archiveEmpty: "Под текущий фильтр ничего не попало. Смените режим архивации и полка снова заполнится.",
-    archiveIntro:
-      "Меньшие записи, более странные инструменты, прототипы и полезные фрагменты. Менее отполировано, чем featured dossiers. Всё ещё стоит осмотра.",
-    archiveLabel: "архив // side quests // полка реликтов",
-    chamberLabel: "sanctum.route // quests",
-    chamberStatus: "профессиональная работа индексирована // полка архива онлайн",
+    archiveEmpty: "По этому фильтру сейчас нет проектов.",
+    archiveIntro: "Дополнительные проекты, эксперименты и утилиты за пределами основных кейсов.",
+    archiveLabel: "другие проекты",
+    chamberLabel: "портфолио // проекты",
+    chamberStatus: "ключевые работы, эксперименты и инструменты",
     currentFilterLabel: "активный фильтр",
-    descriptor:
-      "Камера проектов для отправленных интерфейсов, инженерных систем и нескольких намеренно странных сайд-квестов. Подача атмосферная. Работа реальная.",
-    featuredIntro:
-      "Основные кейсы. Достаточно читаемо для найма, достаточно структурно для инженеров, но по-прежнему подано как артефакты.",
-    featuredLabel: "featured quests",
-    filterLabel: "фильтр архива",
-    headingEyebrow: "журнал квестов // камера профессиональных записей",
-    inspectHint: "наведите или выберите досье, чтобы перенести его в режим осмотра",
-    inspectLabel: "панель осмотра",
-    intro:
-      "Главная работа подана как квестовые записи: что было собрано, какая была роль, каким стеком это держалось и почему это важно.",
+    descriptor: "Список проектов с реальной продуктовой работой, внутренними инструментами и экспериментами.",
+    featuredIntro: "Основные кейсы с понятным контекстом: задача, роль, стек и результат.",
+    featuredLabel: "ключевые проекты",
+    filterLabel: "фильтр",
+    headingEyebrow: "проекты // кейсы",
+    inspectHint: "Выберите проект, чтобы посмотреть детали.",
+    inspectLabel: "детали проекта",
+    intro: "Эти проекты лучше всего показывают, как я решаю продуктовые и инженерные задачи.",
     languageLabel: "Язык",
     linksLabel: "ссылки",
-    openChannelLabel: "open channel",
+    openChannelLabel: "Контакты",
     outcomeLabel: "результат",
     quickLinks: [
       {
         external: true,
         href: "https://github.com/ororura",
-        hint: "open-source следы / индекс репозиториев",
+        hint: "репозитории, код и история коммитов",
         id: "github",
         label: "GitHub",
-        signal: "публичное зеркало",
-        tone: "gold"
+        signal: "внешний",
+        tone: "gold",
       },
       {
         href: "/manuscript",
-        hint: "сжатое CV / печатная запись",
+        hint: "резюме в документном виде",
         id: "cv",
-        label: "Manuscript",
-        signal: "формальная запись",
-        tone: "rust"
+        label: "CV",
+        signal: "документ",
+        tone: "rust",
       },
       {
         href: "/open-channel",
-        hint: "контакт / запрос кейсов",
+        hint: "прямой контакт",
         id: "telegram",
-        label: "Open Channel",
-        signal: "прямой ретранслятор",
-        tone: "cyan"
-      }
+        label: "Контакты",
+        signal: "контакт",
+        tone: "cyan",
+      },
     ],
-    quickLinksIntro: "Быстрые выходы для тех, кому нужен публичный след, формальный документ или прямой канал связи.",
-    quickLinksLabel: "быстрые выходы",
-    recordLabel: "id записи",
-    returnLabel: "вернуться в sanctum",
+    quickLinksIntro: "Быстрые ссылки на код, CV и контакты.",
+    quickLinksLabel: "быстрые ссылки",
+    recordLabel: "id проекта",
+    returnLabel: "назад на главную",
     roleLabel: "роль",
-    soundOff: "Звук: выключен",
-    soundOn: "Звук: активен",
+    soundOff: "Звук выключен",
+    soundOn: "Звук включён",
     stackLabel: "стек",
-    statsLabel: "метрики квестов",
+    statsLabel: "метрики проектов",
     statsLabels: {
-      archiveCount: "архивных реликтов",
-      featuredCount: "главных досье",
-      stackCount: "стеков в работе",
-      workSpan: "рабочий диапазон"
+      archiveCount: "других проектов",
+      featuredCount: "ключевых проектов",
+      stackCount: "технологий",
+      workSpan: "период",
     },
-    systemLabel: "системный сигнал",
-    systemValue: "quests.index == читаемо // атмосферно // готово к ru/en",
-    title: "Quests"
-  }
+    systemLabel: "статус",
+    systemValue: "проекты готовы // ru/en",
+    title: "Проекты",
+  },
 };
 
 export type { QuestsContent, QuestsPageStatLabel };

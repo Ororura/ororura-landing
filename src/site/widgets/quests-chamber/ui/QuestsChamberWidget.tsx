@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type FC, useState } from "react";
 
 import { useArchiveTransition } from "@/features/archive-entry";
 import { LanguageSwitch } from "@/features/language-switch";
@@ -31,7 +31,7 @@ const quickLinkToneClassMap: Record<QuickLinkTone, string> = {
   rust: "border-[#8b3b2f42] hover:border-[#8b3b2f7a] hover:bg-[linear-gradient(180deg,rgba(139,59,47,0.12),rgba(255,255,255,0.02))]"
 };
 
-const QuestsChamberWidget = () => {
+const QuestsChamberWidget: FC = () => {
   const { locale, setLocale } = useArchiveLocale("en");
   const [activeFeaturedId, setActiveFeaturedId] = useState("sanctum-console");
   const [activeArchiveFilter, setActiveArchiveFilter] = useState<ProjectFilterId>("all");
@@ -45,7 +45,8 @@ const QuestsChamberWidget = () => {
   const archiveFilters = getProjectFilterOptions(locale, archiveProjects);
   const uniqueStackCount = new Set(allProjects.flatMap((projectRecord) => projectRecord.stack)).size;
   const { beginTransition, isTransitioning } = useArchiveTransition();
-  const { playClick, playHover, soundEnabled, toggleSound } = useShrineAudio();
+  const { playClick, playFilter, playHover, playNavigate, playSelect, soundEnabled, toggleSound } =
+    useShrineAudio();
 
   const handleLocaleChange = (nextLocale: typeof locale) => {
     setLocale(nextLocale);
@@ -53,17 +54,21 @@ const QuestsChamberWidget = () => {
   };
 
   const handleInspectFeatured = (projectId: string) => {
-    setActiveFeaturedId((currentProjectId) => (currentProjectId === projectId ? currentProjectId : projectId));
-    void playHover();
+    if (activeFeaturedId === projectId) {
+      return;
+    }
+
+    setActiveFeaturedId(projectId);
+    void playSelect();
   };
 
   const handleOpenInternalRoute = (href: string) => {
-    void playClick();
+    void playNavigate();
     beginTransition(href, 420);
   };
 
   const handleOpenLink = (link: ProjectLink) => {
-    void playClick();
+    void playNavigate();
 
     if (link.external) {
       window.open(link.href, "_blank", "noopener,noreferrer");
@@ -74,7 +79,7 @@ const QuestsChamberWidget = () => {
   };
 
   const handleQuickAccess = (link: QuickAccessLink) => {
-    void playClick();
+    void playNavigate();
 
     if (link.external) {
       window.open(link.href, "_blank", "noopener,noreferrer");
@@ -315,7 +320,7 @@ const QuestsChamberWidget = () => {
                   label={copy.filterLabel}
                   onChange={(nextFilter) => {
                     setActiveArchiveFilter(nextFilter);
-                    void playClick();
+                    void playFilter();
                   }}
                   onHover={playHover}
                 />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type FC, useState } from "react";
 
 import { useArchiveTransition } from "@/features/archive-entry";
 import { LanguageSwitch } from "@/features/language-switch";
@@ -27,7 +27,7 @@ const quickLinkToneClassMap: Record<QuickLinkTone, string> = {
   rust: "border-[#8b3b2f42] hover:border-[#8b3b2f7a] hover:bg-[linear-gradient(180deg,rgba(139,59,47,0.12),rgba(255,255,255,0.02))]"
 };
 
-const SanctumShellWidget = () => {
+const SanctumShellWidget: FC = () => {
   const { locale, setLocale } = useArchiveLocale("en");
   const [activeSectorId, setActiveSectorId] = useState<ArchiveSectorId>("character-record");
 
@@ -36,7 +36,7 @@ const SanctumShellWidget = () => {
   const sectors = getArchiveSectors(locale);
   const featuredSectors = getFeaturedArchiveSectors(locale);
   const { beginTransition, isTransitioning } = useArchiveTransition();
-  const { playClick, playHover, soundEnabled, toggleSound } = useShrineAudio();
+  const { playClick, playHover, playNavigate, playSelect, soundEnabled, toggleSound } = useShrineAudio();
 
   const handleLocaleChange = (nextLocale: typeof locale) => {
     setLocale(nextLocale);
@@ -44,12 +44,16 @@ const SanctumShellWidget = () => {
   };
 
   const handleInspect = (sectorId: ArchiveSectorId) => {
-    setActiveSectorId((currentSectorId) => (currentSectorId === sectorId ? currentSectorId : sectorId));
-    void playHover();
+    if (activeSectorId === sectorId) {
+      return;
+    }
+
+    setActiveSectorId(sectorId);
+    void playSelect();
   };
 
   const handleOpenChamber = (href: string) => {
-    void playClick();
+    void playNavigate();
     beginTransition(href, 420);
   };
 
@@ -80,7 +84,7 @@ const SanctumShellWidget = () => {
           className={className}
           href={link.href}
           onClick={() => {
-            void playClick();
+            void playNavigate();
           }}
           onPointerEnter={handleQuickLinkHover}
           rel="noreferrer"
@@ -247,53 +251,26 @@ const SanctumShellWidget = () => {
                     </div>
 
                     <div className="mt-6 grid w-full gap-3 sm:grid-cols-3">
-                      <button
-                        className="rounded-[1.2rem] border border-[#ded2bf12] bg-[#ffffff04] px-4 py-4 text-left transition-all duration-300 hover:border-[#8b755056] hover:bg-[#ffffff06]"
-                        onClick={() => {
-                          handleInspect("character-record");
-                        }}
-                        onPointerEnter={() => {
-                          handleInspect("character-record");
-                        }}
-                        type="button"
-                      >
-                        <div className="font-system text-[0.55rem] uppercase tracking-[0.28em] text-[#8b7550]">identity</div>
-                        <div className="mt-2 font-display text-[0.98rem] uppercase tracking-[0.16em] text-[#eadcc5]">
-                          Human Behind The Mask
-                        </div>
-                      </button>
-
-                      <button
-                        className="rounded-[1.2rem] border border-[#ded2bf12] bg-[#ffffff04] px-4 py-4 text-left transition-all duration-300 hover:border-[#8b3b2f56] hover:bg-[#ffffff06]"
-                        onClick={() => {
-                          handleInspect("quests");
-                        }}
-                        onPointerEnter={() => {
-                          handleInspect("quests");
-                        }}
-                        type="button"
-                      >
-                        <div className="font-system text-[0.55rem] uppercase tracking-[0.28em] text-[#8b3b2f]">work</div>
-                        <div className="mt-2 font-display text-[0.98rem] uppercase tracking-[0.16em] text-[#eadcc5]">
-                          Shipped Project Dossiers
-                        </div>
-                      </button>
-
-                      <button
-                        className="rounded-[1.2rem] border border-[#ded2bf12] bg-[#ffffff04] px-4 py-4 text-left transition-all duration-300 hover:border-[#6d8f8f56] hover:bg-[#ffffff06]"
-                        onClick={() => {
-                          handleInspect("field-notes");
-                        }}
-                        onPointerEnter={() => {
-                          handleInspect("field-notes");
-                        }}
-                        type="button"
-                      >
-                        <div className="font-system text-[0.55rem] uppercase tracking-[0.28em] text-[#6d8f8f]">writing</div>
-                        <div className="mt-2 font-display text-[0.98rem] uppercase tracking-[0.16em] text-[#eadcc5]">
-                          Notes, Fragments, Postmortems
-                        </div>
-                      </button>
+                      {copy.spotlightCards.map((card) => (
+                        <button
+                          className="rounded-[1.2rem] border border-[#ded2bf12] bg-[#ffffff04] px-4 py-4 text-left transition-all duration-300 hover:border-[#8b755056] hover:bg-[#ffffff06]"
+                          key={card.sectorId}
+                          onClick={() => {
+                            handleInspect(card.sectorId);
+                          }}
+                          onPointerEnter={() => {
+                            handleInspect(card.sectorId);
+                          }}
+                          type="button"
+                        >
+                          <div className="font-system text-[0.55rem] uppercase tracking-[0.28em] text-[#8b7550]">
+                            {card.eyebrow}
+                          </div>
+                          <div className="mt-2 font-display text-[0.98rem] uppercase tracking-[0.16em] text-[#eadcc5]">
+                            {card.title}
+                          </div>
+                        </button>
+                      ))}
                     </div>
 
                     <div className="mt-7 w-full max-w-2xl rounded-[1.35rem] border border-[#ded2bf12] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(14,13,14,0.62))] px-4 py-4 text-left">

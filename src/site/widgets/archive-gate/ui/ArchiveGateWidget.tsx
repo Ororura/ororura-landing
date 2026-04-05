@@ -1,5 +1,7 @@
 "use client";
 
+import { type FC, useEffect, useRef } from "react";
+
 import { ArchiveEntryActions, useArchiveTransition } from "@/features/archive-entry";
 import { LanguageSwitch } from "@/features/language-switch";
 import { SoundToggle, useShrineAudio } from "@/features/sound-toggle";
@@ -11,22 +13,31 @@ import { AtmosphericBackground } from "@/shared/ui/atmospheric-background";
 import { PanelFrame } from "@/shared/ui/panel-frame";
 import { useGateSequence } from "../model/useGateSequence";
 
-const ArchiveGateWidget = () => {
+const ArchiveGateWidget: FC = () => {
   const { locale, setLocale } = useArchiveLocale("en");
   const copy = entryCopy[locale];
   const { beginTransition, isTransitioning } = useArchiveTransition();
   const { completeSequence, isRevealed, visibleCount } = useGateSequence(copy.bootLines.length);
-  const { playClick, playHover, soundEnabled, toggleSound } = useShrineAudio();
+  const { playBootStep, playClick, playHover, playNavigate, soundEnabled, toggleSound } = useShrineAudio();
+  const previousVisibleCountRef = useRef(0);
+
+  useEffect(() => {
+    if (visibleCount > previousVisibleCountRef.current && soundEnabled) {
+      void playBootStep(visibleCount - 1);
+    }
+
+    previousVisibleCountRef.current = visibleCount;
+  }, [playBootStep, soundEnabled, visibleCount]);
 
   const handleEnter = () => {
     completeSequence();
-    void playClick();
+    void playNavigate();
     beginTransition("/sanctum", 960);
   };
 
   const handleSkip = () => {
     completeSequence();
-    void playClick();
+    void playNavigate();
     beginTransition("/sanctum", 260);
   };
 
@@ -47,7 +58,7 @@ const ArchiveGateWidget = () => {
         <div className="flex items-start justify-between gap-4 px-5 pb-2 pt-5 sm:px-8 sm:pt-8 lg:px-12 lg:pt-10">
           <div className="max-w-xs animate-veil-in">
             <div className="font-system text-[0.58rem] uppercase tracking-[0.32em] text-[#8f887c]">
-              gate 01 // archive entry
+              {copy.pageLabel}
             </div>
             <div className="mt-3 max-w-[17rem] font-system text-[0.64rem] uppercase tracking-[0.2em] text-[#b2a694]">
               {copy.badge}

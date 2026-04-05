@@ -1,0 +1,1 @@
+export { useArchiveLocale } from "./useArchiveLocale";

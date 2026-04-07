@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 import { cn } from "@/shared/lib/cn";
 
 import { getProjectCategoryMeta } from "../model/projectRecords";
@@ -18,25 +20,27 @@ const toneClassMap = {
   ash: "from-[#ded2bf20] via-[#ded2bf06] to-transparent",
   cyan: "from-[#6d8f8f50] via-[#6d8f8f08] to-transparent",
   gold: "from-[#8b755050] via-[#8b755008] to-transparent",
-  rust: "from-[#8b3b2f50] via-[#8b3b2f08] to-transparent"
+  rust: "from-[#8b3b2f50] via-[#8b3b2f08] to-transparent",
 } as const;
 
-const ArchiveRelicCard = ({
-  locale,
-  onHover,
-  onOpenLink,
-  project
-}: ArchiveRelicCardProps) => {
+const ArchiveRelicCard: FC<ArchiveRelicCardProps> = ({ locale, onHover, onOpenLink, project }) => {
   const categoryMeta = getProjectCategoryMeta(locale, project.category);
 
   return (
     <article className="group relative overflow-hidden rounded-[1.45rem] border border-[#ded2bf12] bg-[linear-gradient(180deg,rgba(255,255,255,0.035),rgba(12,11,12,0.48))] px-4 py-4 transition-all duration-300 hover:border-[#ded2bf2f] hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(12,11,12,0.6))]">
-      <div className={cn("pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r", toneClassMap[categoryMeta.tone])} />
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r",
+          toneClassMap[categoryMeta.tone],
+        )}
+      />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,transparent,rgba(255,255,255,0.035),transparent)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       <div className="relative">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="font-system text-[0.56rem] uppercase tracking-[0.3em] text-[#8b7550]">{project.archiveId}</div>
+          <div className="font-system text-[0.56rem] uppercase tracking-[0.3em] text-[#8b7550]">
+            {project.archiveId}
+          </div>
           <ProjectStatusSeal locale={locale} size="sm" status={project.status} />
         </div>
 

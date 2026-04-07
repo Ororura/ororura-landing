@@ -1,10 +1,12 @@
+import type { FC } from "react";
+
 import { cn } from "@/shared/lib/cn";
 
 type AtmosphericBackgroundProps = {
   isTransitioning?: boolean;
 };
 
-const AtmosphericBackground = ({ isTransitioning = false }: AtmosphericBackgroundProps) => {
+const AtmosphericBackground: FC<AtmosphericBackgroundProps> = ({ isTransitioning = false }) => {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <div className="absolute inset-0 bg-shrine-grain opacity-60" />
@@ -39,4 +41,3 @@ const AtmosphericBackground = ({ isTransitioning = false }: AtmosphericBackgroun
 };
 
 export { AtmosphericBackground };
-

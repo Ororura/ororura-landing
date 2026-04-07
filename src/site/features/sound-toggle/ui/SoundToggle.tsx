@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 import { cn } from "@/shared/lib/cn";
 
 type SoundToggleProps = {
@@ -9,7 +11,7 @@ type SoundToggleProps = {
 
 const bars = [0, 1, 2];
 
-const SoundToggle = ({ enabled, label, onHover, onToggle }: SoundToggleProps) => {
+const SoundToggle: FC<SoundToggleProps> = ({ enabled, label, onHover, onToggle }) => {
   return (
     <button
       className="group flex items-center gap-3 rounded-full border border-[#ded2bf14] bg-[#0d0b0dc9] px-4 py-3 shadow-[0_12px_30px_rgba(0,0,0,0.28)] backdrop-blur-md transition-all duration-300 hover:border-[#8b755052] focus:outline-none focus:ring-1 focus:ring-[#ded2bf4d]"
@@ -29,7 +31,7 @@ const SoundToggle = ({ enabled, label, onHover, onToggle }: SoundToggleProps) =>
                 bar === 0 && "h-2.5",
                 bar === 1 && "h-4",
                 bar === 2 && "h-5.5",
-                isLit && "bg-[#6d8f8f] shadow-[0_0_12px_rgba(109,143,143,0.45)]"
+                isLit && "bg-[#6d8f8f] shadow-[0_0_12px_rgba(109,143,143,0.45)]",
               )}
             />
           );
@@ -42,4 +44,3 @@ const SoundToggle = ({ enabled, label, onHover, onToggle }: SoundToggleProps) =>
 };
 
 export { SoundToggle };
-

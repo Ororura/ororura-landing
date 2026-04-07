@@ -21,14 +21,17 @@ const useGateSequence = (lineCount: number) => {
     timeouts.push(
       window.setTimeout(() => {
         setIsRevealed(true);
-      }, 420)
+      }, 420),
     );
 
     Array.from({ length: lineCount }).forEach((_, index) => {
       timeouts.push(
-        window.setTimeout(() => {
-          setVisibleCount(index + 1);
-        }, 220 + index * 240)
+        window.setTimeout(
+          () => {
+            setVisibleCount(index + 1);
+          },
+          220 + index * 240,
+        ),
       );
     });
 
@@ -47,9 +50,8 @@ const useGateSequence = (lineCount: number) => {
   return {
     completeSequence,
     isRevealed,
-    visibleCount
+    visibleCount,
   };
 };
 
 export { useGateSequence };
-

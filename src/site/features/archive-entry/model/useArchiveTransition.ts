@@ -33,9 +33,8 @@ const useArchiveTransition = () => {
 
   return {
     beginTransition,
-    isTransitioning
+    isTransitioning,
   };
 };
 
 export { useArchiveTransition };
-

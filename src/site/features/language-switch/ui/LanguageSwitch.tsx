@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 import type { Locale } from "@/shared/config";
 
 import { cn } from "@/shared/lib/cn";
@@ -11,7 +13,7 @@ type LanguageSwitchProps = {
 
 const locales: Locale[] = ["en", "ru"];
 
-const LanguageSwitch = ({ currentLocale, label, onChange, onHover }: LanguageSwitchProps) => {
+const LanguageSwitch: FC<LanguageSwitchProps> = ({ currentLocale, label, onChange, onHover }) => {
   return (
     <div className="rounded-full border border-[#ded2bf14] bg-[#0d0b0dc9] px-2 py-2 shadow-[0_12px_30px_rgba(0,0,0,0.28)] backdrop-blur-md">
       <div className="px-2 pb-1 font-system text-[0.55rem] uppercase tracking-[0.28em] text-[#8f887c]">{label}</div>
@@ -42,4 +44,3 @@ const LanguageSwitch = ({ currentLocale, label, onChange, onHover }: LanguageSwi
 };
 
 export { LanguageSwitch };
-

@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, FC, ReactNode } from "react";
 
 import { cn } from "@/shared/lib/cn";
 
@@ -17,14 +17,14 @@ const variantClasses: Record<RitualButtonVariant, string> = {
     "border-[#ded2bf1f] bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] text-[#c2b6a5] hover:border-[#8b755056] hover:bg-[linear-gradient(180deg,rgba(139,117,80,0.12),rgba(17,16,19,0.25))]"
 };
 
-const RitualButton = ({
+const RitualButton: FC<RitualButtonProps> = ({
   children,
   className,
   disabled,
   hint,
   variant = "primary",
   ...props
-}: RitualButtonProps) => {
+}) => {
   return (
     <button
       className={cn(
@@ -47,4 +47,3 @@ const RitualButton = ({
 };
 
 export { RitualButton };
-

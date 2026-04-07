@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 import { cn } from "@/shared/lib/cn";
 
 import type { ArchiveSector } from "../model/archiveSectors";
@@ -11,27 +13,30 @@ type ArchiveSectorRouteItemProps = {
 
 const accentClassMap = {
   cyan: {
-    active: "border-[#6d8f8f66] bg-[linear-gradient(180deg,rgba(109,143,143,0.12),rgba(12,15,16,0.46))] shadow-[0_0_0_1px_rgba(109,143,143,0.08),0_18px_40px_rgba(0,0,0,0.28)]",
-    glow: "bg-[#6d8f8f]"
+    active:
+      "border-[#6d8f8f66] bg-[linear-gradient(180deg,rgba(109,143,143,0.12),rgba(12,15,16,0.46))] shadow-[0_0_0_1px_rgba(109,143,143,0.08),0_18px_40px_rgba(0,0,0,0.28)]",
+    glow: "bg-[#6d8f8f]",
   },
   gold: {
-    active: "border-[#8b755066] bg-[linear-gradient(180deg,rgba(139,117,80,0.16),rgba(19,17,15,0.56))] shadow-[0_0_0_1px_rgba(139,117,80,0.08),0_18px_40px_rgba(0,0,0,0.28)]",
-    glow: "bg-[#8b7550]"
+    active:
+      "border-[#8b755066] bg-[linear-gradient(180deg,rgba(139,117,80,0.16),rgba(19,17,15,0.56))] shadow-[0_0_0_1px_rgba(139,117,80,0.08),0_18px_40px_rgba(0,0,0,0.28)]",
+    glow: "bg-[#8b7550]",
   },
   rust: {
-    active: "border-[#8b3b2f66] bg-[linear-gradient(180deg,rgba(139,59,47,0.16),rgba(19,15,15,0.56))] shadow-[0_0_0_1px_rgba(139,59,47,0.08),0_18px_40px_rgba(0,0,0,0.28)]",
-    glow: "bg-[#8b3b2f]"
-  }
+    active:
+      "border-[#8b3b2f66] bg-[linear-gradient(180deg,rgba(139,59,47,0.16),rgba(19,15,15,0.56))] shadow-[0_0_0_1px_rgba(139,59,47,0.08),0_18px_40px_rgba(0,0,0,0.28)]",
+    glow: "bg-[#8b3b2f]",
+  },
 } as const;
 
-const ArchiveSectorRouteItem = ({ isActive, onInspect, onOpen, sector }: ArchiveSectorRouteItemProps) => {
+const ArchiveSectorRouteItem: FC<ArchiveSectorRouteItemProps> = ({ isActive, onInspect, onOpen, sector }) => {
   const accentClasses = accentClassMap[sector.accent];
 
   return (
     <button
       className={cn(
         "group relative w-full overflow-hidden rounded-[1.35rem] border border-[#ded2bf12] bg-[linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.015))] px-4 py-4 text-left transition-all duration-300 hover:border-[#ded2bf32] hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] focus:outline-none focus:ring-1 focus:ring-[#ded2bf4d]",
-        isActive && accentClasses.active
+        isActive && accentClasses.active,
       )}
       onClick={onOpen}
       onFocus={onInspect}
@@ -47,7 +52,7 @@ const ArchiveSectorRouteItem = ({ isActive, onInspect, onOpen, sector }: Archive
           <div
             className={cn(
               "mt-2 h-[2px] w-8 rounded-full bg-[#ded2bf22] transition-all duration-300",
-              isActive && accentClasses.glow
+              isActive && accentClasses.glow,
             )}
           />
         </div>
@@ -61,7 +66,7 @@ const ArchiveSectorRouteItem = ({ isActive, onInspect, onOpen, sector }: Archive
           <span
             className={cn(
               "h-2.5 w-2.5 rounded-full border border-[#ded2bf22] bg-transparent transition-all duration-300",
-              isActive && accentClasses.glow
+              isActive && accentClasses.glow,
             )}
           />
         </div>

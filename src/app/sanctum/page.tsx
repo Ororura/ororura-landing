@@ -1,6 +1,8 @@
+import type { FC } from "react";
+
 import { SanctumPage } from "@/pages/sanctum";
 
-const Page = () => {
+const Page: FC = () => {
   return <SanctumPage />;
 };
 

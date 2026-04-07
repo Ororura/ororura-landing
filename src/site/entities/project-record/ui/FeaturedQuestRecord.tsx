@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 import { cn } from "@/shared/lib/cn";
 
 import { getProjectCategoryMeta } from "../model/projectRecords";
@@ -17,15 +19,10 @@ const toneClassMap = {
   ash: "from-[#ded2bf18] via-[#ded2bf08] to-transparent",
   cyan: "from-[#6d8f8f52] via-[#6d8f8f12] to-transparent",
   gold: "from-[#8b755052] via-[#8b755012] to-transparent",
-  rust: "from-[#8b3b2f52] via-[#8b3b2f12] to-transparent"
+  rust: "from-[#8b3b2f52] via-[#8b3b2f12] to-transparent",
 } as const;
 
-const FeaturedQuestRecord = ({
-  isActive,
-  locale,
-  onInspect,
-  project
-}: FeaturedQuestRecordProps) => {
+const FeaturedQuestRecord: FC<FeaturedQuestRecordProps> = ({ isActive, locale, onInspect, project }) => {
   const categoryMeta = getProjectCategoryMeta(locale, project.category);
 
   return (
@@ -33,14 +30,19 @@ const FeaturedQuestRecord = ({
       className={cn(
         "group relative w-full overflow-hidden rounded-[1.55rem] border border-[#ded2bf12] bg-[linear-gradient(180deg,rgba(255,255,255,0.035),rgba(12,11,12,0.48))] px-4 py-4 text-left transition-all duration-300 hover:border-[#ded2bf32] hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(12,11,12,0.58))] focus:outline-none focus:ring-1 focus:ring-[#ded2bf4d]",
         isActive &&
-          "border-[#8b75505a] bg-[linear-gradient(180deg,rgba(139,117,80,0.14),rgba(12,11,12,0.62))] shadow-[0_0_0_1px_rgba(139,117,80,0.08),0_18px_40px_rgba(0,0,0,0.28)]"
+          "border-[#8b75505a] bg-[linear-gradient(180deg,rgba(139,117,80,0.14),rgba(12,11,12,0.62))] shadow-[0_0_0_1px_rgba(139,117,80,0.08),0_18px_40px_rgba(0,0,0,0.28)]",
       )}
       onClick={onInspect}
       onFocus={onInspect}
       onPointerEnter={onInspect}
       type="button"
     >
-      <div className={cn("pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r", toneClassMap[categoryMeta.tone])} />
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r",
+          toneClassMap[categoryMeta.tone],
+        )}
+      />
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,transparent,rgba(255,255,255,0.04),transparent)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       <div className="relative flex flex-wrap items-center justify-between gap-3">

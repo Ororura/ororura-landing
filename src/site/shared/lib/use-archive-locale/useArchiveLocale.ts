@@ -3,36 +3,27 @@
 import { useEffect, useState } from "react";
 
 import type { Locale } from "@/shared/config";
-
-const ARCHIVE_LOCALE_KEY = "archive.locale";
+import { getPreferredArchiveLocale, persistArchiveLocale } from "./archiveLocale";
+import { useArchiveLocaleContext } from "./ArchiveLocaleProvider";
 
 const useArchiveLocale = (initialLocale: Locale = "en") => {
-  const [locale, setLocale] = useState<Locale>(initialLocale);
+  const contextLocale = useArchiveLocaleContext();
+  const fallbackLocale = contextLocale ?? initialLocale;
+  const [locale, setLocale] = useState<Locale>(fallbackLocale);
+  const [hasResolvedLocale, setHasResolvedLocale] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const storedLocale = window.localStorage.getItem(ARCHIVE_LOCALE_KEY);
-
-    if (storedLocale === "en" || storedLocale === "ru") {
-      setLocale(storedLocale);
-      return;
-    }
-
-    if (window.navigator.language.toLowerCase().startsWith("ru")) {
-      setLocale("ru");
-    }
-  }, []);
+    setLocale(getPreferredArchiveLocale(fallbackLocale));
+    setHasResolvedLocale(true);
+  }, [fallbackLocale]);
 
   useEffect(() => {
-    if (typeof window === "undefined") {
+    if (!hasResolvedLocale) {
       return;
     }
 
-    window.localStorage.setItem(ARCHIVE_LOCALE_KEY, locale);
-  }, [locale]);
+    persistArchiveLocale(locale);
+  }, [hasResolvedLocale, locale]);
 
   return {
     locale,

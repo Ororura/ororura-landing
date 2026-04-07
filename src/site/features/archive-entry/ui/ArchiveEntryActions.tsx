@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 import { RitualButton } from "@/shared/ui/ritual-button";
 
 type ArchiveEntryActionsProps = {
@@ -11,7 +13,7 @@ type ArchiveEntryActionsProps = {
   skipLabel: string;
 };
 
-const ArchiveEntryActions = ({
+const ArchiveEntryActions: FC<ArchiveEntryActionsProps> = ({
   enterHint,
   enterLabel,
   isBusy,
@@ -19,8 +21,8 @@ const ArchiveEntryActions = ({
   onHover,
   onSkip,
   skipHint,
-  skipLabel
-}: ArchiveEntryActionsProps) => {
+  skipLabel,
+}) => {
   return (
     <div className="grid gap-3 sm:grid-cols-2">
       <RitualButton
@@ -49,4 +51,3 @@ const ArchiveEntryActions = ({
 };
 
 export { ArchiveEntryActions };
-

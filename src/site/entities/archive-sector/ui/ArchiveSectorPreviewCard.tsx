@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 import { cn } from "@/shared/lib/cn";
 
 import type { ArchiveSector } from "../model/archiveSectors";
@@ -11,23 +13,19 @@ type ArchiveSectorPreviewCardProps = {
 const accentClassMap = {
   cyan: {
     line: "from-[#6d8f8f75] via-[#6d8f8f22] to-transparent",
-    state: "text-[#9ec0c0]"
+    state: "text-[#9ec0c0]",
   },
   gold: {
     line: "from-[#8b755075] via-[#8b755022] to-transparent",
-    state: "text-[#d4c19e]"
+    state: "text-[#d4c19e]",
   },
   rust: {
     line: "from-[#8b3b2f75] via-[#8b3b2f22] to-transparent",
-    state: "text-[#d2a397]"
-  }
+    state: "text-[#d2a397]",
+  },
 } as const;
 
-const ArchiveSectorPreviewCard = ({
-  className,
-  sector,
-  variant = "detail"
-}: ArchiveSectorPreviewCardProps) => {
+const ArchiveSectorPreviewCard: FC<ArchiveSectorPreviewCardProps> = ({ className, sector, variant = "detail" }) => {
   const accentClasses = accentClassMap[sector.accent];
   const isCompact = variant === "compact";
 
@@ -35,7 +33,7 @@ const ArchiveSectorPreviewCard = ({
     <div
       className={cn(
         "rounded-[1.45rem] border border-[#ded2bf12] bg-[linear-gradient(180deg,rgba(255,255,255,0.035),rgba(12,11,12,0.42))] p-4",
-        className
+        className,
       )}
     >
       <div className="flex items-center gap-3 font-system text-[0.58rem] uppercase tracking-[0.28em] text-[#8f887c]">

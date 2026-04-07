@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 import { getProjectCategoryMeta } from "../model/projectRecords";
 import { ProjectLinkCluster } from "./ProjectLinkCluster";
 import { ProjectStatusSeal } from "./ProjectStatusSeal";
@@ -21,13 +23,7 @@ type ProjectInspectPanelProps = {
   project: ProjectRecord;
 };
 
-const ProjectInspectPanel = ({
-  labels,
-  locale,
-  onHover,
-  onOpenLink,
-  project
-}: ProjectInspectPanelProps) => {
+const ProjectInspectPanel: FC<ProjectInspectPanelProps> = ({ labels, locale, onHover, onOpenLink, project }) => {
   const categoryMeta = getProjectCategoryMeta(locale, project.category);
 
   return (
@@ -57,7 +53,9 @@ const ProjectInspectPanel = ({
         </div>
 
         <div className="rounded-[1.25rem] border border-[#ded2bf10] bg-[#ffffff04] px-4 py-4">
-          <div className="font-system text-[0.56rem] uppercase tracking-[0.3em] text-[#8b7550]">{labels.outcomeLabel}</div>
+          <div className="font-system text-[0.56rem] uppercase tracking-[0.3em] text-[#8b7550]">
+            {labels.outcomeLabel}
+          </div>
           <div className="mt-3 text-[0.9rem] leading-relaxed text-[#c9bdab]">{project.outcome}</div>
         </div>
       </div>

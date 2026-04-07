@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 
 import { cn } from "@/shared/lib/cn";
 
@@ -7,7 +7,7 @@ type PanelFrameProps = {
   className?: string;
 };
 
-const PanelFrame = ({ children, className }: PanelFrameProps) => {
+const PanelFrame: FC<PanelFrameProps> = ({ children, className }) => {
   return (
     <div
       className={cn(
@@ -32,4 +32,3 @@ const PanelFrame = ({ children, className }: PanelFrameProps) => {
 };
 
 export { PanelFrame };
-

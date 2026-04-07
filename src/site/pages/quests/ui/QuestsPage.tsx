@@ -1,6 +1,8 @@
+import type { FC } from "react";
+
 import { QuestsChamberWidget } from "@/widgets/quests-chamber";
 
-const QuestsPage = () => {
+const QuestsPage: FC = () => {
   return <QuestsChamberWidget />;
 };
 

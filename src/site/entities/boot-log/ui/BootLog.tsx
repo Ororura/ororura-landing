@@ -1,3 +1,5 @@
+import type { FC } from "react";
+
 import { cn } from "@/shared/lib/cn";
 
 type BootLogProps = {
@@ -7,7 +9,7 @@ type BootLogProps = {
   visibleCount: number;
 };
 
-const BootLog = ({ label, lines, status, visibleCount }: BootLogProps) => {
+const BootLog: FC<BootLogProps> = ({ label, lines, status, visibleCount }) => {
   return (
     <div className="max-w-md">
       <div className="flex items-center gap-3 font-system text-[0.62rem] uppercase tracking-[0.28em] text-[#8b7550]">
@@ -24,7 +26,7 @@ const BootLog = ({ label, lines, status, visibleCount }: BootLogProps) => {
               key={line}
               className={cn(
                 "flex items-center gap-3 font-system text-[0.68rem] uppercase tracking-[0.16em] text-[#9f988c] transition-all duration-500",
-                isVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
+                isVisible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
               )}
             >
               <span className="w-6 text-[#6d8f8f]">{String(index + 1).padStart(2, "0")}</span>
@@ -44,4 +46,3 @@ const BootLog = ({ label, lines, status, visibleCount }: BootLogProps) => {
 };
 
 export { BootLog };
-

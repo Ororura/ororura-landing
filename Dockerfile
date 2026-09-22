@@ -1,11 +1,11 @@
-FROM node:25-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /app
 COPY package.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-FROM node:25-alpine AS runner
+FROM node:26-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=build /app/.next/standalone ./

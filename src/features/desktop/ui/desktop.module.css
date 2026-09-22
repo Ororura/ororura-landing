@@ -1,0 +1,19 @@
+.desktop {
+  position: absolute;
+  inset: 0 0 38px;
+
+  overflow: hidden;
+
+  background: #008080;
+}
+
+.icons {
+  display: grid;
+  width: max-content;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(5, 92px);
+
+  padding: 10px 8px;
+
+  gap: 2px 8px;
+}

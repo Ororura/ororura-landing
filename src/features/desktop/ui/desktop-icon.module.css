@@ -1,0 +1,48 @@
+.icon {
+  display: flex;
+  width: 92px;
+  min-height: 82px;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+
+  padding: 4px;
+
+  border: 1px solid transparent;
+  background: transparent;
+
+  color: #fff;
+  cursor: default;
+
+  text-align: center;
+}
+
+.icon:focus {
+  outline: none;
+}
+
+.icon:focus .label,
+.icon:active .label {
+  background: #000080;
+  outline: 1px dotted #fff;
+}
+
+.image {
+  display: flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 34px;
+  line-height: 1;
+}
+
+.label {
+  padding: 1px 3px;
+
+  font-size: 13px;
+  line-height: 16px;
+
+  text-shadow: 1px 1px #000;
+}

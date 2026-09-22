@@ -1,0 +1,94 @@
+.taskbar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10000;
+
+  display: flex;
+  height: 38px;
+  align-items: center;
+  gap: 4px;
+
+  padding: 4px;
+
+  border-top: 2px solid #fff;
+
+  background: #c0c0c0;
+}
+
+.startButton {
+  display: flex !important;
+  min-width: 86px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.windowsLogo {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.separator {
+  width: 2px;
+  height: 28px;
+
+  border-left: 1px solid #808080;
+  border-right: 1px solid #fff;
+}
+
+.tasks {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: 4px;
+
+  overflow: hidden;
+}
+
+.task {
+  display: flex;
+  width: 170px;
+  max-width: 170px;
+  min-width: 0;
+  height: 29px;
+  flex-shrink: 1;
+  align-items: center;
+  gap: 6px;
+
+  padding: 0 8px;
+
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+
+  background: #c0c0c0;
+
+  color: #000;
+
+  cursor: default;
+
+  text-align: left;
+}
+
+.taskActive {
+  border-top: 2px solid #808080;
+  border-left: 2px solid #808080;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+
+  background: #b0b0b0;
+
+  font-weight: bold;
+}
+
+.taskTitle {
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,32 +1,24 @@
-import type { ReactNode } from "react";
-
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
 
-import {
-  ARCHIVE_LOCALE_COOKIE_KEY,
-  ArchiveLocaleProvider,
-  resolveArchiveLocale
-} from "@/shared/lib/use-archive-locale";
+import "@react95/core/GlobalStyle";
+import "@react95/core/themes/win95.css";
+import "@react95/icons/icons.css";
+
 import "./globals.css";
 
-const metadata: Metadata = {
-  title: "Ororura Archive",
-  description: "Ritual entry gate for a faceless software engineer archive."
+export const metadata: Metadata = {
+  title: "Egor.exe",
+  description: "Personal website of Egor — Java Backend Developer",
 };
 
-const RootLayout = async ({ children }: Readonly<{ children: ReactNode }>) => {
-  const cookieStore = await cookies();
-  const initialLocale = resolveArchiveLocale(cookieStore.get(ARCHIVE_LOCALE_COOKIE_KEY)?.value);
+type RootLayoutProps = Readonly<{
+  children: React.ReactNode;
+}>;
 
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang={initialLocale}>
-      <body>
-        <ArchiveLocaleProvider initialLocale={initialLocale}>{children}</ArchiveLocaleProvider>
-      </body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
-};
-
-export { metadata };
-export { RootLayout as default };
+}

@@ -1,9 +1,11 @@
-import type { FC } from "react";
+import { Desktop } from "@/features/desktop/ui/desktop";
+import { Taskbar } from "@/features/taskbar/ui/taskbar";
 
-import { EntryGatePage } from "@/pages/entry-gate";
-
-const Page: FC = () => {
-  return <EntryGatePage />;
-};
-
-export { Page as default };
+export default function Home() {
+  return (
+    <>
+      <Desktop />
+      <Taskbar />
+    </>
+  );
+}

@@ -1,94 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "URW Palladio L", serif;
-  --font-body: "Segoe UI Variable Text", "Trebuchet MS", "Lucida Grande", sans-serif;
-  --font-system: "IBM Plex Mono", "SFMono-Regular", "Consolas", "Liberation Mono", monospace;
-  --page-base:
-    radial-gradient(circle at 50% 20%, rgba(139, 117, 80, 0.14), transparent 28%),
-    radial-gradient(circle at 18% 78%, rgba(91, 22, 21, 0.18), transparent 26%),
-    radial-gradient(circle at 88% 14%, rgba(109, 143, 143, 0.08), transparent 18%),
-    linear-gradient(180deg, #0b090a 0%, #060506 54%, #080708 100%);
+* {
+  box-sizing: border-box;
 }
 
-html {
-  color-scheme: dark;
+html,
+body {
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  min-height: 100vh;
-  overflow-x: hidden;
-  background-image: var(--page-base);
-  background-color: #070607;
-  color: #ded2bf;
-  font-family: var(--font-body);
-  text-rendering: optimizeLegibility;
+  overflow: hidden;
+  background: #008080;
+  color: #000;
 }
 
-a,
-button {
-  -webkit-tap-highlight-color: transparent;
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
-
-* {
-  scrollbar-color: rgba(139, 117, 80, 0.28) rgba(7, 6, 7, 0.8);
-}
-
-::selection {
-  background: rgba(139, 59, 47, 0.36);
-  color: #f1e7d6;
-}
-
-@layer base {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-display);
-  }
-}
-
-@layer utilities {
-  .font-display {
-    font-family: var(--font-display);
-  }
-
-  .font-body {
-    font-family: var(--font-body);
-  }
-
-  .font-system {
-    font-family: var(--font-system);
-  }
-
-  .text-shadow-ritual {
-    text-shadow:
-      0 0 22px rgba(139, 117, 80, 0.18),
-      0 0 8px rgba(109, 143, 143, 0.08);
-  }
-
-  .bg-shrine-grain {
-    background-image:
-      linear-gradient(125deg, rgba(255, 255, 255, 0.02) 0, transparent 18%, transparent 82%, rgba(255, 255, 255, 0.015) 100%),
-      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.035) 0, transparent 2px),
-      radial-gradient(circle at 75% 65%, rgba(255, 255, 255, 0.02) 0, transparent 2px),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 35%);
-    background-size: auto, 10px 10px, 13px 13px, auto;
-  }
-
-  .bg-engraved-grid {
-    background-image:
-      linear-gradient(rgba(222, 210, 191, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(222, 210, 191, 0.03) 1px, transparent 1px);
-    background-size: 120px 120px;
-  }
-
-  .mask-vignette {
-    mask-image: radial-gradient(circle at center, black 42%, transparent 100%);
-  }
-}
-

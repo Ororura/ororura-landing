@@ -54,4 +54,16 @@ describe("Taskbar", () => {
 
     expect(state.activeWindowId).toBeNull();
   });
+
+  it("restores a minimized window on taskbar click", () => {
+    const store = useWindowStore.getState();
+    store.openWindow("about");
+    store.minimizeWindow("about");
+    render(<Taskbar />);
+
+    fireEvent.click(screen.getByRole("button", { name: /about egor/i }));
+
+    expect(useWindowStore.getState().windows[0].minimized).toBe(false);
+    expect(useWindowStore.getState().activeWindowId).toBe("about");
+  });
 });

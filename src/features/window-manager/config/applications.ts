@@ -2,13 +2,14 @@ import type { ComponentType } from "react";
 
 import { AboutApp } from "@/features/apps/about/ui/about-app";
 
-import type { ApplicationId, WindowPosition, WindowSize } from "../model/window.types";
+import type { WindowPosition, WindowSize } from "../model/window.types";
 
 export interface ApplicationDefinition {
-  id: ApplicationId;
+  id: string;
 
   title: string;
   icon: string;
+  desktopLabel?: string;
 
   component: ComponentType;
 
@@ -19,12 +20,13 @@ export interface ApplicationDefinition {
   minHeight: number;
 }
 
-export const applications: Record<ApplicationId, ApplicationDefinition> = {
+export const applications = {
   about: {
     id: "about",
 
     title: "About Egor",
     icon: "🖥️",
+    desktopLabel: "About Me.txt",
 
     component: AboutApp,
 
@@ -41,4 +43,4 @@ export const applications: Record<ApplicationId, ApplicationDefinition> = {
     minWidth: 400,
     minHeight: 300,
   },
-};
+} satisfies Record<string, ApplicationDefinition>;

@@ -35,6 +35,10 @@ export function AppWindow({ window }: AppWindowProps) {
 
   const isActive = activeWindowId === window.id;
 
+  const desktopSize = useWindowStore((state) => state.desktopSize);
+  const isMobile = desktopSize !== null && desktopSize.width <= 600;
+  const fillsDesktop = window.maximized || isMobile;
+
   if (window.minimized) {
     return null;
   }
@@ -42,19 +46,21 @@ export function AppWindow({ window }: AppWindowProps) {
   return (
     <Rnd
       bounds="parent"
-      position={window.maximized ? { x: 0, y: 0 } : window.position}
+      position={fillsDesktop ? { x: 0, y: 0 } : window.position}
       size={
-        window.maximized
+        fillsDesktop
           ? {
               width: "100%",
               height: "100%",
             }
           : window.size
       }
-      minWidth={application.minWidth}
-      minHeight={application.minHeight}
-      disableDragging={window.maximized}
-      enableResizing={!window.maximized}
+      minWidth={isMobile ? 0 : application.minWidth}
+      minHeight={isMobile ? 0 : application.minHeight}
+      maxWidth={desktopSize?.width}
+      maxHeight={desktopSize?.height}
+      disableDragging={fillsDesktop}
+      enableResizing={!fillsDesktop}
       dragHandleClassName={styles.titleBar}
       cancel="button"
       onMouseDown={() => {
@@ -88,9 +94,7 @@ export function AppWindow({ window }: AppWindowProps) {
       <section className={styles.window} aria-label={application.title}>
         <header
           className={`${styles.titleBar} ${isActive ? styles.active : styles.inactive}`}
-          onDoubleClick={() => {
-            maximizeWindow(window.id);
-          }}
+          onDoubleClick={() => maximizeWindow(window.id)}
         >
           <div className={styles.title}>
             <span aria-hidden="true">{application.icon}</span>

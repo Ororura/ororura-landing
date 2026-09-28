@@ -1,4 +1,6 @@
-export type ApplicationId = "about";
+import type { applications } from "../config/applications";
+
+export type ApplicationId = keyof typeof applications;
 
 export interface WindowPosition {
   x: number;

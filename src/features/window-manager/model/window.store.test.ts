@@ -359,3 +359,29 @@ describe("Window Store", () => {
     });
   });
 });
+
+describe("project detail windows", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    useWindowStore.setState({ windows: [], activeWindowId: null, nextZIndex: 1, desktopSize: null });
+  });
+
+  it("keeps different project windows independent and reuses the same project window", () => {
+    const store = useWindowStore.getState();
+    store.openProjectWindow("dotfiles");
+    store.openProjectWindow("waves-postoffice");
+    store.openProjectWindow("dotfiles");
+    expect(useWindowStore.getState().windows.map((window) => window.id)).toEqual([
+      "project:dotfiles",
+      "project:waves-postoffice",
+    ]);
+    expect(useWindowStore.getState().activeWindowId).toBe("project:dotfiles");
+    store.closeWindow("project:dotfiles");
+    expect(useWindowStore.getState().windows.map((window) => window.id)).toEqual(["project:waves-postoffice"]);
+  });
+
+  it("restores valid project windows and ignores unknown project ids", () => {
+    const windows = restoreWindows([{ id: "project:dotfiles" }, { id: "project:unknown" }], null);
+    expect(windows.map((window) => window.id)).toEqual(["project:dotfiles"]);
+  });
+});

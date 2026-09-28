@@ -1,6 +1,8 @@
 import type { applications } from "../config/applications";
+import type { ProjectId } from "@/features/apps/projects/model/projects";
 
 export type ApplicationId = keyof typeof applications;
+export type WindowId = ApplicationId | `project:${ProjectId}`;
 
 export interface WindowPosition {
   x: number;
@@ -13,7 +15,7 @@ export interface WindowSize {
 }
 
 export interface WindowState {
-  id: ApplicationId;
+  id: WindowId;
 
   position: WindowPosition;
   size: WindowSize;

@@ -2,26 +2,38 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { applications } from "../config/applications";
+import { getProject, projects, type ProjectId } from "@/features/apps/projects/model/projects";
 
-import type { ApplicationId, WindowPosition, WindowSize, WindowState } from "./window.types";
+import type { ApplicationId, WindowId, WindowPosition, WindowSize, WindowState } from "./window.types";
 
 interface WindowStore {
   windows: WindowState[];
-  activeWindowId: ApplicationId | null;
+  activeWindowId: WindowId | null;
   nextZIndex: number;
   desktopSize: WindowSize | null;
   setDesktopSize: (size: WindowSize) => void;
   openWindow: (id: ApplicationId) => void;
-  closeWindow: (id: ApplicationId) => void;
-  focusWindow: (id: ApplicationId) => void;
-  minimizeWindow: (id: ApplicationId) => void;
-  maximizeWindow: (id: ApplicationId) => void;
-  toggleTaskbarWindow: (id: ApplicationId) => void;
-  moveWindow: (id: ApplicationId, position: WindowPosition) => void;
-  resizeWindow: (id: ApplicationId, size: WindowSize, position: WindowPosition) => void;
+  openProjectWindow: (id: ProjectId) => void;
+  closeWindow: (id: WindowId) => void;
+  focusWindow: (id: WindowId) => void;
+  minimizeWindow: (id: WindowId) => void;
+  maximizeWindow: (id: WindowId) => void;
+  toggleTaskbarWindow: (id: WindowId) => void;
+  moveWindow: (id: WindowId, position: WindowPosition) => void;
+  resizeWindow: (id: WindowId, size: WindowSize, position: WindowPosition) => void;
 }
 
-function getTopWindow(windows: WindowState[]): ApplicationId | null {
+export function getWindowApplicationId(id: WindowId): ApplicationId {
+  return id.startsWith("project:") ? "project-details" : (id as ApplicationId);
+}
+
+export function getWindowProjectId(id: WindowId): ProjectId | undefined {
+  if (!id.startsWith("project:")) return undefined;
+  const project = projects.find((item) => item.id === id.slice("project:".length));
+  return project?.id;
+}
+
+function getTopWindow(windows: WindowState[]): WindowId | null {
   const visible = windows.filter((window) => !window.minimized);
   return visible.length ? visible.reduce((top, window) => (window.zIndex > top.zIndex ? window : top)).id : null;
 }
@@ -33,7 +45,7 @@ function clamp(value: number, minimum: number, maximum: number) {
 export function constrainWindow(window: WindowState, desktopSize: WindowSize | null): WindowState {
   if (!desktopSize || desktopSize.width <= 0 || desktopSize.height <= 0) return window;
 
-  const application = applications[window.id];
+  const application = applications[getWindowApplicationId(window.id)];
   const width = clamp(window.size.width, Math.min(application.minWidth, desktopSize.width), desktopSize.width);
   const height = clamp(window.size.height, Math.min(application.minHeight, desktopSize.height), desktopSize.height);
 
@@ -49,6 +61,13 @@ export function constrainWindow(window: WindowState, desktopSize: WindowSize | n
 
 function isApplicationId(value: unknown): value is ApplicationId {
   return typeof value === "string" && Object.hasOwn(applications, value);
+}
+
+function isWindowId(value: unknown): value is WindowId {
+  return (
+    isApplicationId(value) ||
+    (typeof value === "string" && value.startsWith("project:") && !!getProject(value.slice(8)))
+  );
 }
 
 function isPosition(value: unknown): value is WindowPosition {
@@ -81,14 +100,14 @@ function isSize(value: unknown): value is WindowSize {
 
 export function restoreWindows(persisted: unknown, desktopSize: WindowSize | null): WindowState[] {
   if (!Array.isArray(persisted)) return [];
-  const seen = new Set<ApplicationId>();
+  const seen = new Set<WindowId>();
   const windows: WindowState[] = [];
 
   for (const entry of persisted) {
     const item: unknown = entry;
-    if (typeof item !== "object" || item === null || !("id" in item) || !isApplicationId(item.id) || seen.has(item.id))
+    if (typeof item !== "object" || item === null || !("id" in item) || !isWindowId(item.id) || seen.has(item.id))
       continue;
-    const application = applications[item.id];
+    const application = applications[getWindowApplicationId(item.id)];
     seen.add(item.id);
     const window: WindowState = {
       id: item.id,
@@ -108,6 +127,30 @@ export function restoreWindows(persisted: unknown, desktopSize: WindowSize | nul
   return windows.map((window) => ({ ...window, zIndex: zIndices.get(window.id) ?? 1 }));
 }
 
+function openedWindow(state: WindowStore, id: WindowId) {
+  const zIndex = state.nextZIndex;
+  const existing = state.windows.find((window) => window.id === id);
+  if (existing)
+    return {
+      windows: state.windows.map((window) => (window.id === id ? { ...window, minimized: false, zIndex } : window)),
+      activeWindowId: id,
+      nextZIndex: zIndex + 1,
+    };
+  const application = applications[getWindowApplicationId(id)];
+  const window = constrainWindow(
+    {
+      id,
+      position: { ...application.defaultPosition },
+      size: { ...application.defaultSize },
+      minimized: false,
+      maximized: false,
+      zIndex,
+    },
+    state.desktopSize,
+  );
+  return { windows: [...state.windows, window], activeWindowId: id, nextZIndex: zIndex + 1 };
+}
+
 export const useWindowStore = create<WindowStore>()(
   persist(
     (set) => ({
@@ -122,33 +165,9 @@ export const useWindowStore = create<WindowStore>()(
           windows: state.windows.map((window) => constrainWindow(window, size)),
         })),
 
-      openWindow: (id) =>
-        set((state) => {
-          const zIndex = state.nextZIndex;
-          const existing = state.windows.find((window) => window.id === id);
-          if (existing)
-            return {
-              windows: state.windows.map((window) =>
-                window.id === id ? { ...window, minimized: false, zIndex } : window,
-              ),
-              activeWindowId: id,
-              nextZIndex: zIndex + 1,
-            };
+      openWindow: (id) => set((state) => openedWindow(state, id)),
 
-          const application = applications[id];
-          const window = constrainWindow(
-            {
-              id,
-              position: { ...application.defaultPosition },
-              size: { ...application.defaultSize },
-              minimized: false,
-              maximized: false,
-              zIndex,
-            },
-            state.desktopSize,
-          );
-          return { windows: [...state.windows, window], activeWindowId: id, nextZIndex: zIndex + 1 };
-        }),
+      openProjectWindow: (id) => set((state) => openedWindow(state, `project:${id}`)),
 
       closeWindow: (id) =>
         set((state) => {
@@ -230,8 +249,8 @@ export const useWindowStore = create<WindowStore>()(
                   {
                     ...window,
                     size: {
-                      width: Math.max(size.width, applications[id].minWidth),
-                      height: Math.max(size.height, applications[id].minHeight),
+                      width: Math.max(size.width, applications[getWindowApplicationId(id)].minWidth),
+                      height: Math.max(size.height, applications[getWindowApplicationId(id)].minHeight),
                     },
                     position,
                   },

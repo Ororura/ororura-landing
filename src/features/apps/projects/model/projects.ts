@@ -22,7 +22,11 @@ export const projects = [
       "A tutor and student platform with learning programs, lesson materials, assignments and progress tracking. The frontend and backend live in separate repositories.",
     status: "Public repository",
     stack: ["Next.js", "TypeScript", "Java", "Spring Boot", "PostgreSQL"],
-    highlights: ["Learning programs and lesson materials", "Assignments and progress tracking", "Tutor and student workflows"],
+    highlights: [
+      "Learning programs and lesson materials",
+      "Assignments and progress tracking",
+      "Tutor and student workflows",
+    ],
     githubUrl: "https://github.com/Ororura/tutorplatform-frontend",
     repositories: [{ label: "Backend", url: "https://github.com/Ororura/tutorplatform-backend" }],
   },
@@ -43,8 +47,7 @@ export const projects = [
     slug: "ororura-landing",
     title: "Ororura Landing",
     shortDescription: "A Windows 95 inspired personal portfolio.",
-    description:
-      "A personal portfolio presented as a classic desktop, with movable application windows and a taskbar.",
+    description: "A personal portfolio presented as a classic desktop, with movable application windows and a taskbar.",
     status: "Public repository",
     stack: ["Next.js", "React", "TypeScript", "Zustand"],
     highlights: ["Desktop shortcuts", "Movable and resizable windows", "Taskbar and window state"],
@@ -55,8 +58,7 @@ export const projects = [
     slug: "dotfiles",
     title: "Dotfiles",
     shortDescription: "Personal macOS configuration files.",
-    description:
-      "A collection of personal macOS configuration files and installation scripts for development tools.",
+    description: "A collection of personal macOS configuration files and installation scripts for development tools.",
     status: "Public repository",
     stack: ["Shell", "Neovim", "tmux", "Git"],
     highlights: ["Configuration for development tools", "Installation scripts", "Shell setup"],
@@ -66,6 +68,6 @@ export const projects = [
 
 export type ProjectId = (typeof projects)[number]["id"];
 
-export function getProject(id: string) {
+export function getProject(id: string): Project | undefined {
   return projects.find((project) => project.id === id);
 }

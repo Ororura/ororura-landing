@@ -1,0 +1,90 @@
+.details {
+  min-height: 100%;
+  padding: 18px 22px 24px;
+  background: #fff;
+  color: #111;
+  font:
+    14px Arial,
+    sans-serif;
+}
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #999;
+}
+.icon {
+  font-size: 42px;
+  line-height: 1;
+}
+.heading h1 {
+  margin: 0 0 4px;
+  font-size: 20px;
+}
+.heading p {
+  margin: 0;
+  color: #444;
+}
+.properties {
+  margin: 16px 0;
+  border: 1px solid #888;
+}
+.properties div {
+  display: grid;
+  grid-template-columns: 95px 1fr;
+  padding: 7px 10px;
+}
+.properties div + div {
+  border-top: 1px solid #bbb;
+}
+.properties dt {
+  font-weight: bold;
+}
+.properties dd {
+  margin: 0;
+}
+.details section {
+  margin-top: 18px;
+}
+.details h2 {
+  margin: 0 0 7px;
+  font-size: 15px;
+}
+.details section p {
+  margin: 0;
+  line-height: 1.45;
+}
+.details ul {
+  margin: 0;
+  padding-left: 22px;
+  line-height: 1.5;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+.links a {
+  display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid;
+  border-color: #fff #333 #333 #fff;
+  background: #c0c0c0;
+  color: #000080;
+}
+.links a:focus-visible {
+  outline: 2px dotted #000;
+  outline-offset: 2px;
+}
+.empty {
+  padding: 20px;
+}
+@media (max-width: 600px) {
+  .details {
+    padding: 14px;
+  }
+  .properties div {
+    grid-template-columns: 75px 1fr;
+  }
+}

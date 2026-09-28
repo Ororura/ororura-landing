@@ -45,7 +45,9 @@ export function ProjectsExplorer({ onOpenProject }: ProjectsExplorerProps) {
               if (event.key === "Enter") onOpenProject(project.id);
             }}
           >
-            <span className={styles.icon}><ProjectIcon open={selectedId === project.id} /></span>
+            <span className={styles.icon}>
+              <ProjectIcon open={selectedId === project.id} />
+            </span>
             <span className={styles.itemText}>
               <strong>{project.title}</strong>
               <small>{project.shortDescription}</small>

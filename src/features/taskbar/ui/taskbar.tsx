@@ -3,8 +3,13 @@
 import { Button } from "@react95/core";
 
 import { applications } from "@/features/window-manager/config/applications";
+import { getProject } from "@/features/apps/projects/model/projects";
 
-import { useWindowStore } from "@/features/window-manager/model/window.store";
+import {
+  getWindowApplicationId,
+  getWindowProjectId,
+  useWindowStore,
+} from "@/features/window-manager/model/window.store";
 
 import { TaskbarClock } from "./taskbar-clock";
 
@@ -29,7 +34,9 @@ export function Taskbar() {
 
       <div className={styles.tasks}>
         {windows.map((window) => {
-          const application = applications[window.id];
+          const application = applications[getWindowApplicationId(window.id)];
+          const projectId = getWindowProjectId(window.id);
+          const title = projectId ? getProject(projectId)?.title : application.title;
 
           const isActive = activeWindowId === window.id && !window.minimized;
 
@@ -44,7 +51,7 @@ export function Taskbar() {
             >
               <span aria-hidden="true">{application.icon}</span>
 
-              <span className={styles.taskTitle}>{application.title}</span>
+              <span className={styles.taskTitle}>{title}</span>
             </button>
           );
         })}

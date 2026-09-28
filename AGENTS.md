@@ -49,6 +49,7 @@ gh pr checks
 Fix failures caused by the branch, commit the fixes, push, and re-check CI.
 
 PR body should briefly state:
+
 - changes;
 - important decisions;
 - tests/checks run.
@@ -74,6 +75,7 @@ Do not merge the PR.
 Preserve Windows 95 aesthetics.
 
 Prefer classic:
+
 - windows;
 - explorer views;
 - menus;

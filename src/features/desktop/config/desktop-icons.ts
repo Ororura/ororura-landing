@@ -7,7 +7,7 @@ type DesktopIconDefinition =
 
 export const desktopIcons: DesktopIconDefinition[] = [
   { id: "computer", icon: "🖥️", label: "My Computer" },
-  { id: "projects", icon: "📁", label: "My Projects" },
+  { id: "projects", applicationId: "projects" },
   { id: "about", applicationId: "about" },
   { id: "network", icon: "🌐", label: "Network" },
   { id: "recycle-bin", icon: "🗑️", label: "Recycle Bin" },

@@ -3,8 +3,9 @@
 import { Rnd } from "react-rnd";
 
 import { applications } from "../config/applications";
+import { getProject } from "@/features/apps/projects/model/projects";
 
-import { useWindowStore } from "../model/window.store";
+import { getWindowApplicationId, getWindowProjectId, useWindowStore } from "../model/window.store";
 
 import type { WindowState } from "../model/window.types";
 
@@ -29,7 +30,9 @@ export function AppWindow({ window }: AppWindowProps) {
 
   const resizeWindow = useWindowStore((state) => state.resizeWindow);
 
-  const application = applications[window.id];
+  const application = applications[getWindowApplicationId(window.id)];
+  const projectId = getWindowProjectId(window.id);
+  const title = projectId ? `${getProject(projectId)?.title} - Project Details` : application.title;
 
   const ApplicationComponent = application.component;
 
@@ -91,7 +94,7 @@ export function AppWindow({ window }: AppWindowProps) {
         pointerEvents: "auto",
       }}
     >
-      <section className={styles.window} aria-label={application.title}>
+      <section className={styles.window} aria-label={title}>
         <header
           className={`${styles.titleBar} ${isActive ? styles.active : styles.inactive}`}
           onDoubleClick={() => maximizeWindow(window.id)}
@@ -99,7 +102,7 @@ export function AppWindow({ window }: AppWindowProps) {
           <div className={styles.title}>
             <span aria-hidden="true">{application.icon}</span>
 
-            <span>{application.title}</span>
+            <span>{title}</span>
           </div>
 
           <div className={styles.controls}>
@@ -143,7 +146,7 @@ export function AppWindow({ window }: AppWindowProps) {
         </div>
 
         <div className={styles.content}>
-          <ApplicationComponent />
+          <ApplicationComponent projectId={projectId} />
         </div>
 
         <footer className={styles.statusBar}>

@@ -19,7 +19,7 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@react95/core": "^9.8.5",
+    "@react95/core": "^10.0.2",
     "@react95/icons": "^2.5.3",
     "next": "16.4.2",
     "react": "19.3.0",
